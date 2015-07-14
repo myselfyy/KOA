@@ -1,0 +1,17 @@
+{
+    "appenders": [{
+        "type": "dateFile",
+        "filename": "logs/node.request.log",
+        "alwaysIncludePattern": false,
+        "replaceConsole": true,
+        "maxLogSize": 20480,
+        "category": "request"
+    },{
+        "type": "dateFile",
+        "filename": "logs/node.server.log",
+        "alwaysIncludePattern": false,
+        "replaceConsole": true,
+        "maxLogSize": 20480,
+        "category": "server"
+    }]
+}

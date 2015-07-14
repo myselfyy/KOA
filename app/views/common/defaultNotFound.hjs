@@ -1,0 +1,12 @@
+{{<layout}}
+    {{$content}}
+        <p>&rarr; &rarr;Begin content</p>
+        {{> welcome}}
+        <p>&rarr; &rarr;End content</p>
+        Hello {{name}}
+        You'v just won {{value}} dollars!
+        {{#in_ca}}
+            Well, {{taxed_value}} dollars, after taxes;
+        {{/in_ca}}
+    {{/content}}
+{{/layout}} 

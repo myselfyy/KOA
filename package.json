@@ -1,0 +1,42 @@
+{
+  "name": "koa-node",
+  "description": "Koa project of wooha",
+  "private": true,
+  "version": "0.0.1",
+  "repository": "",
+  "dependencies": {
+    "co": "^4.1.0",
+    "co-body": "^1.0.0",
+    "co-fs": "^1.2.0",
+    "hogan.js": "^3.0.2",
+    "mongoose": "^4.0.6",
+    "log4js": "^0.6.26",
+    "koa": "^0.14.0",
+    "koa-basic-auth": "^1.1.1",
+    "koa-compose": "^2.3.0",
+    "koa-csrf": "^2.1.1",
+    "koa-logger": "^1.2.1",
+    "koa-router": "^5.1.2",
+    "koa-send": "^1.3.1",
+    "koa-generic-session": "^1.9.0",
+    "koa-generic-session-mongo": "^0.2.2",
+    "koa-static": "^1.4.5",
+    "raw-body": "^1.2.1",
+    "save-to": "^1.0.3",
+    "streaming-json-stringify": "^1.0.0"
+  },
+  "devDependencies": {
+    "consolidate": "^0.13.1",
+    "ejs": "2",
+    "jade": "1",
+    "mocha": "2",
+    "swig": "1"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=dev node --harmony bin/app.js",
+    "start": "NODE_ENV=product node --harmony bin/cluster.js"
+  },
+  "engines": {
+    "node": "0.12.1"
+  }
+}
