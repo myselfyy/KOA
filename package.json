@@ -21,8 +21,11 @@
     "koa-generic-session": "^1.9.0",
     "koa-generic-session-mongo": "^0.2.2",
     "koa-static": "^1.4.5",
+    "args-expect": "^0.2.1",
+    "caller-lookup": "^0.2.0",
     "raw-body": "^1.2.1",
     "save-to": "^1.0.3",
+    "koa-bodyparser": "^3.0.0",
     "streaming-json-stringify": "^1.0.0"
   },
   "devDependencies": {
@@ -33,7 +36,7 @@
     "swig": "1"
   },
   "scripts": {
-    "dev": "NODE_ENV=dev node --harmony bin/app.js",
+    "dev": "NODE_ENV=dev node --harmony bin/server.js",
     "start": "NODE_ENV=product node --harmony bin/cluster.js"
   },
   "engines": {

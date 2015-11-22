@@ -5,7 +5,10 @@
 var koa = require('koa'),
     app = koa();
 
-app.name = 'codoon';
+var info = require('./app/helpers/info');
+app.info = info.create();
+
+app.name = 'tms';
 app.keys = ['keys', 'keykeys'];
 
 //环境flag
@@ -16,15 +19,15 @@ if(env === 'local' || env === 'development'){
 }
 
 //session缓存
-var session = require('koa-generic-session');
-var mongo = require('koa-generic-session-mongo');
-var mongoStore = mongo.connect(config.sessionMongo[dbType]);
-app.use(session({store: mongoStore}));
+// var session = require('koa-generic-session');
+// var mongo = require('koa-generic-session-mongo');
+// var mongoStore = mongo.connect(config.sessionMongo[dbType]);
+// app.use(session({store: mongoStore}));
 
 //数据处理
-var data = require('./app/helpers/data');
-data.connect(config.mongoDB[dbType])
-app.db = data;
+// var data = require('./app/helpers/data');
+// data.connect(config.mongoDB[dbType])
+// app.db = data;
 
 //post body 解析
 var bodyParser = require('koa-bodyparser');

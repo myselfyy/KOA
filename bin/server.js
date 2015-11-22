@@ -2,10 +2,10 @@
 //#!/usr/bin/env node
 'use strict';
 
-var app = require('../app');
-var router = require('../app/routes/routers');
-var logger = require('../app/helpers/logger').getLogger('server');
-var graceful = require('graceful');
+var app      = require('../app'),
+    router   = require('../app/routes/routers'),
+    graceful = require('graceful'),
+    logger   = require('../app/helpers/logger').getLogger('server');
 
 var port = process.env.PORT || 6001;
 
@@ -14,11 +14,11 @@ var context = require('../app/helpers/context');
 context(app);
 
 app.use(function *notFound(next) {
-  if (this.status == 404) {
-    console.log(this.url, 'requested but no route matches.');
-  } else {
-    yield next;
-  }
+    if (this.status == 404) {
+        console.log(this.url, 'requested but no route matches.');
+    } else {
+        yield next;
+    }
 });
 
 var server = app.listen(port, function(){
