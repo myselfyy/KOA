@@ -31,11 +31,7 @@ if(env === 'local' || env === 'development'){
 
 //post body 解析
 var bodyParser = require('koa-bodyparser');
-app.use(bodyParser({
-    onerror: function (err, ctx) {
-        ctx.throw('body parse error', 422);
-    }
-}));
+app.use(bodyParser());
 
 //前置执行的业务中间件
 var beforeMiddleware = require('./app/helpers/before-middleware');

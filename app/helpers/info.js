@@ -165,10 +165,10 @@ function getConfigFiles() {
 
 function Info() {
     var nodeEnv      = getNodeEnvFromProcess(),
-        rootPath     = computeRootPath(),
+        rootPath     = computeRootPath();
 
-    logger.info('NODE_ENV is %s.', nodeEnv);
-    logger.info('ROOT_PATH is %s.', rootPath);
+    logger.info('NODE_ENV is %s', nodeEnv);
+    logger.info('ROOT_PATH is %s', rootPath);
 
     this.getEnvFields = function getEnvFields() {
         /* above fields will be mixin into config global */
