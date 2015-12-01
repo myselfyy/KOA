@@ -155,6 +155,7 @@ var render = {
         //所有的路由都会触发error事件
         if(!err) return false;
         logger.error(JSON.stringify(err));
+
         if(process.env.NODE_ENV === 'production'){
             this.redirect('/error.html');
         }

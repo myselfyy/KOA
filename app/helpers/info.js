@@ -74,16 +74,10 @@ function updateProcessEnv(key, value) {
 *   @private
 */
 function getNodeEnvFromProcess() {
-    var nodeEnv   = (process.env[NODE_ENV_KEY] || '').toLowerCase(),
+    var nodeEnv   = (process.env[NODE_ENV_KEY] || '').toUpperCase(),
         available = false;
 
     if (nodeEnv) {
-        /*  legacy-node-env check has been removed from midway 3.0
-            if user still using midway@1.2.x,
-            follow <http://gitlab.alibaba-inc.com/midway/midway/wikis/upgrade-nodeenv>
-            to do the midway upgrade
-        */
-
         /* make sure the nodeEnv is an available value */
         available = nodeEnv in NODE_ENV;
 
@@ -94,8 +88,10 @@ function getNodeEnvFromProcess() {
                     return NODE_ENV[key];
                 }).join(', '));
 
-            /* if not known, fallback to original value. */
-            nodeEnv = process.env[NODE_ENV_KEY];
+            /* if not known, fallback to default value. */
+            nodeEnv = DEFAULT_NODE_ENV;
+        } else {
+            nodeEnv = NODE_ENV[nodeEnv];
         }
     } else {
         logger.warn('Failed to find NODE_ENV value' +

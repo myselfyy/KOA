@@ -37,8 +37,8 @@
     "swig": "1"
   },
   "scripts": {
-    "dev": "NODE_ENV=dev node --harmony bin/server.js",
-    "start": "NODE_ENV=product node --harmony bin/cluster.js"
+    "dev": "NODE_ENV=local node --harmony bin/server.js",
+    "start": "NODE_ENV=prod node --harmony bin/cluster.js"
   },
   "engines": {
     "node": "0.12.1"

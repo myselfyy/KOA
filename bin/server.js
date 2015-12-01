@@ -9,6 +9,7 @@ var app      = require('../app'),
 var port = process.env.PORT || 6001;
 
 //给应用上下文注入方法
+
 var context = require('../app/helpers/context');
 context(app);
 
