@@ -11,64 +11,47 @@ var viewsRoot = __dirname.replace(/\/app\/.*/, '/app/views/');
 function getPartials(partial){
     var partials = {};
     for (key in partial) {
-        partials[key] = global.templates[partial[key]]
+        partials[key] = process._templates_[partial[key]]
     }
     return partials;
 }
 
-var render = {
-    //预编译模版
-    /*
-    * @param {String} view
-    * @param {Object} options {reload, cache}
-    * */
-    _fncompile: function (view, options) {
-        options = options || {cache: true};
-        return function(done){
-            var file = viewsRoot + view;
-            var ext = path.extname(file);
-            if (ext && ext !== 'hjs') throw('compile file type error: ' + file);
-            if (!ext)
-                file += '.hjs';
-            var fn = function(err, str){
-                if (err) throw('read file error: ' + err);
-                var tpl = Hogan.compile(str);
-                if (options.cache) utils.registerTpl(view, tpl);
-                done();
-            };
+//预编译模版
+/*
+ * @param {String} view
+ * @param {Object} options {reload, cache}
+ * */
+function fncompile (view, options) {
+    options = options || {cache: true};
+    return function(done){
+        var file = viewsRoot + view;
+        var ext = path.extname(file);
+        if (ext && ext !== 'hjs') throw('compile file type error: ' + file);
+        if (!ext)
+            file += '.hjs';
+        var fn = function(err, str){
+            if (err) throw('read file error: ' + err);
+            var tpl = Hogan.compile(str);
+            if (options.cache) utils.registerTpl(view, tpl);
+            done();
+        };
 
-            if (view in global.templates || options.reload) {
-                done();
-            } else {
-                utils.readUTF8File(file, fn);
-            }
+        if (view in process._templates_ || options.reload) {
+            done();
+        } else {
+            utils.readUTF8File(file, fn);
         }
-    },
-    //编译返回结果
-    /*
-    * @return {String} html
-    * */
-    compile: function (view, opts){
-        return function *(){
-            opts = opts || {};
-            var ext = path.extname(view).slice(1);
-            if (ext == 'html'){
-                yield send(this, view);
-            } else {
-                yield render._fncompile(view);
-                var partials = getPartials(opts.partial);
-                return global.templates[view].render(opts.data, partials);
-            }
-        }
-    },
-    //渲染模版重新载入页面
+    }
+}
+
+var render = {
     /**
+     * render response html
      * @param {String} view
      * @param {Object} opts
      */
-    _render: function *(view, opts) {
+    render: function *(view, opts) {
         opts = opts || {};
-        var templates = global.templates;
         if (typeof view == 'object') {
             opts = view;
             view = opts.root || base;
@@ -86,14 +69,31 @@ var render = {
             }
 
             for (v of arr) {
-                yield render._fncompile(v);
+                yield fncompile(v);
             }
 
             var partials = getPartials(opts.partial);
-            this.body = global.templates[view].render(opts.data, partials);
+            this.body = process._templates_[view].render(opts.data, partials);
         }
     },
-    //渲染html
+    //编译返回结果
+    /*
+    * @return {String} html
+    * */
+    compile: function (view, opts){
+        return function *(){
+            opts = opts || {};
+            var ext = path.extname(view).slice(1);
+            if (ext == 'html'){
+                yield send(this, view);
+            } else {
+                yield fncompile(view);
+                var partials = getPartials(opts.partial);
+                return process._templates_[view].render(opts.data, partials);
+            }
+        }
+    },
+    // attend extra response info
     /*
     * @param {String} viewName
     * @param {Object} data
@@ -106,9 +106,9 @@ var render = {
         data.token = this.token;
         data.nick = this.nick;
 
-        try{
+        try {
             yield this.render(viewName, data);
-        }catch (e){
+        } catch (e) {
             var page = this.buPage + '/error/error-page';
             var message = e.message;
             logger.error(this.url + '-->' + message);

@@ -17,7 +17,7 @@ module.exports = {
     **/
     registerTpl: function (view, res) {
         view = view.replace(/.*\/app\/views\//, '');
-        if (view != '') global.templates[view] = res;
+        if (view != '') process._templates_[view] = res;
     },
     readUTF8File: function (file, fn, done){
         fs.readFile(file, 'utf8', function(err, str){

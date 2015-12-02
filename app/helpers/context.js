@@ -21,9 +21,11 @@ function log(type,info){
 
 module.exports = function(app){
     //应用专用的渲染方法
-    app.context.compile = render.compile;
+    process._templates_ = {};
     app.context.render = render._render;
+    app.context.compile = render.compile;
     app.context.html = render.html;
+    app.context.api = render.api;
 
     //覆写错误输出
     if(process.env.NODE_ENV === 'production') {

@@ -8,6 +8,6 @@ var viewList = ['layout/defaultNotFound','common/defaultNotFound','home/welcome'
 module.exports = function (){
     for (view of viewList) {
         console.log(view);
-        render._fncompile(view);
+        render.compile(view);
     }
 };

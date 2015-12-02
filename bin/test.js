@@ -4,7 +4,7 @@ var routes = require('../app/routes/routers');
 var logger = require('../app/helpers/logger').getLogger('server');
 
 //模版预编译缓存
-global.templates = {};
+process._templates_ = {};
 
 //给应用上下文注入方法
 var context = require('../app/helpers/context');
