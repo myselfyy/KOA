@@ -1,8 +1,8 @@
 module.exports = function (router){
     router.get('/', function *(next){
-        var home = yield this.compile('home/welcome', {
+        var home = yield this.html('home/welcome', {
             "data": {
-                "title": "xxxxx"
+                "title": "home page"
             }
         });
         this.body = home;

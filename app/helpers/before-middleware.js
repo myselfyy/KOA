@@ -6,9 +6,8 @@ module.exports = {
         this.token = cookies.get('token_');
         this.userId = cookies.get('uid');
         this.ip = this.ip || '';
-        // this.ua = this.ua.type || '';
+        this.ua = this.req.headers["user-agent"] || '';
         //当前页面业务线[list,detail,comment]
-        // this.buPage = this.path.slice(8,-1);
 
         // x-response-time
         var start = new Date;

@@ -1,9 +1,10 @@
-var Hogan = require('hogan.js');
-var path = require('path');
-var send = require('koa-send');
+var Hogan = require('hogan.js'),
+    path = require('path'),
+    send = require('koa-send'),
 
-var logger = require('./logger').getLogger('server');
-var utils = require('./utils');
+    logger = require('./logger').getLogger('server'),
+    utils = require('./utils'),
+    user = require('../models/user');
 
 var base = path.dirname(module.parent.filename);
 var viewsRoot = __dirname.replace(/\/app\/.*/, '/app/views/');
@@ -99,9 +100,9 @@ var render = {
     * @param {Object} data
     **/
     html: function *(viewName, data){
-        data.isLogin = util.isLogin.bind(this)();
+        data.isLogin = user.checkLogin.bind(this)();
         data.ip = this.ip || '';
-        data.ua = this.$ua.type;
+        data.ua = this.ua.type;
         data.userId = this.userId;
         data.token = this.token;
         data.nick = this.nick;
@@ -123,13 +124,13 @@ var render = {
     api: function(data,jsonp){
         this.type = 'application/json; charset=utf-8';
         var output = '{}';
-        if(typeof data == 'object'){
+        if(typeof data == 'object') {
             output = JSON.stringify(data);
         }
-        if(jsonp){
+        if(jsonp) {
             var callback = this.request.query.callback;
             if(callback){
-                if(this.SecurityUtil){
+                if(this.SecurityUtil) {
                     callback = this.SecurityUtil.escapeHtml(callback);
                 }
                 //\r\n防止UTF7XSS
