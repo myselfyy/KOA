@@ -46,6 +46,23 @@ function fncompile (view, options) {
 }
 
 var render = {
+    //编译返回结果
+    /*
+    * @return {String} html
+    * */
+    compile: function (view, opts){
+        return function *(){
+            opts = opts || {};
+            var ext = path.extname(view).slice(1);
+            if (ext == 'html'){
+                yield send(this, view);
+            } else {
+                yield fncompile(view);
+                var partials = getPartials(opts.partial);
+                return process._templates_[view].render(opts.data, partials);
+            }
+        }
+    },
     /**
      * render response html
      * @param {String} view
@@ -77,25 +94,8 @@ var render = {
             this.body = process._templates_[view].render(opts.data, partials);
         }
     },
-    //编译返回结果
     /*
-    * @return {String} html
-    * */
-    compile: function (view, opts){
-        return function *(){
-            opts = opts || {};
-            var ext = path.extname(view).slice(1);
-            if (ext == 'html'){
-                yield send(this, view);
-            } else {
-                yield fncompile(view);
-                var partials = getPartials(opts.partial);
-                return process._templates_[view].render(opts.data, partials);
-            }
-        }
-    },
-    // attend extra response info
-    /*
+    * attend extra response info
     * @param {String} viewName
     * @param {Object} data
     **/

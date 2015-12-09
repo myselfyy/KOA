@@ -26,5 +26,31 @@ module.exports = {
             str = str.replace(/^\uFEFF/, '');
             return fn(null, str);
         });
+    },
+    extend: function (object) {
+        // Takes an unlimited number of extenders.
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        // For each extender, copy their properties on our object.
+        for (var i = 0, source; source = args[i]; i++) {
+            if (!source) continue;
+            for (var property in source) {
+                object[property] = source[property];
+            }
+        }
+
+        return object;
+    },
+
+    extendDeep: function(a, b){
+        if ("_" in window) {
+            for (var k in b) {
+                if ( _.isObj(b[k]) )
+                    arguments.callee(a[k], b[k]);
+                else
+                    (a[k] = b[k]);
+            }
+            return a
+        }
     }
 };

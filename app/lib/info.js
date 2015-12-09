@@ -1,4 +1,4 @@
-var logger = require('./logger').getLogger('server'),
+var logger = require('../helpers/logger').getLogger('server'),
     expect = require('args-expect'),
     path   = require('path'),
     fs     = require('fs'),

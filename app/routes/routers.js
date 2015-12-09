@@ -6,8 +6,8 @@ var maxAge = 24 * 60 * 60 * 1000;
 
 function *notFound(next) {
     if (this.status == 404) {
-        yield this.render('common/defaultNotFound', {
-            "data": {
+        yield this.render('page/404', {
+            data: {
                 "name": 'Chris',
                 "value": 10000,
                 "taxed_value": 0.9,
@@ -15,8 +15,8 @@ function *notFound(next) {
                 "title": 'xxxxxxx'
             },
             partial: {
-                welcome: 'home/welcome',
-                layout: 'layout/defaultNotFound'
+                welcome: 'page/index/welcome',
+                layout: 'layout/default'
             }
         });
     }
@@ -38,8 +38,8 @@ function *favicon(next){
 
 var publicFiles = fileServer(path.join(__dirname.split('/app/')[0]+'/public'), {index: true, maxage: maxAge});
 
-require('./home-router')(router);
-require('./item-router')(router);
+require('./index-router')(router);
+require('./article-router')(router);
 require('./my-router')(router);
 
 module.exports = function (app){

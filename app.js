@@ -5,7 +5,7 @@
 var koa = require('koa'),
     app = koa();
 
-var info = require('./app/helpers/info');
+var info = require('./app/lib/info');
 app.info = info.create();
 
 app.name = 'tms';

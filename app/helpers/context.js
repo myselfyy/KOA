@@ -23,7 +23,6 @@ module.exports = function(app){
     //应用专用的渲染方法
     process._templates_ = {};
     app.context.render = render.render;
-    app.context.compile = render.compile;
     app.context.html = render.html;
     app.context.api = render.api;
 

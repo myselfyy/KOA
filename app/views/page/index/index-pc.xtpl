@@ -1,0 +1,13 @@
+{{extend ("../layout/default-layout") }}
+{{#block ("head") }}
+    <link rel="stylesheet" type="text/css" href="http://g.tbcdn.cn/tb/auction/{{$global.auctionVersion}}/common/??base-min.css,paginator-min.css" />
+    <style>
+        .mkt-auction-top-2014 a.btn-down-arrow{display: none !important;}
+        .mkt-auction-top-2014 .sub{display: block !important;}
+    </style>
+{{/block}}
+{{#block ("content") }}
+    {{include ('tms://rgn/paimai/paiheader.php') }}
+    {{include ('tms://rgn/paimai/mainblock.php') }}
+{{/block}}
+
