@@ -107,6 +107,13 @@ var render = {
         data.token = this.token;
         data.nick = this.nick;
 
+        /*
+        * attend default layout
+        * */
+        data.partial = utils.extendDeep({
+            layout: 'layout/default'
+        }, data.partial);
+
         try {
             yield this.render(viewName, data);
         } catch (e) {
@@ -121,7 +128,7 @@ var render = {
     * @param {Object} data
     * @param {Boolean} jsonp
     **/
-    api: function(data,jsonp){
+    api: function (data,jsonp){
         this.type = 'application/json; charset=utf-8';
         var output = '{}';
         if(typeof data == 'object') {
@@ -145,14 +152,14 @@ var render = {
     * @param {String} msg
     * @param {Boolean} jsonp
     **/
-    errorApi: function(msg,jsonp){
+    errorApi: function (msg,jsonp){
         return render.api.bind(this)({success:false, msg:msg || ''},jsonp);
     },
     //发生异常重定向到错误页面
     /*
     * @param {}
     **/
-    redirectError: function(err){
+    redirectError: function (err){
         //所有的路由都会触发error事件
         if(!err) return false;
         logger.error(JSON.stringify(err));

@@ -20,6 +20,8 @@ function log(type,info){
 }
 
 module.exports = function(app){
+    app.context.$global = app.info.getEnvFields();
+
     //应用专用的渲染方法
     process._templates_ = {};
     app.context.render = render.render;

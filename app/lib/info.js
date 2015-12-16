@@ -211,7 +211,8 @@ function Info() {
 *   @function
 */
 function createInfo() {
-    return new Info();
+    var info = new Info();
+    return info;
 }
 
 exports.create = createInfo;

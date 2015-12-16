@@ -7,7 +7,6 @@
     <title>{{title}}</title>
     <meta name="description" content="{{title}}" />
     <meta name="keywords" content="{{title}}" />
-    {{include ("../page/index/welcome")}}
     <style>
         h3{
             font-size: 14px;
@@ -30,6 +29,7 @@
     <div id="content">
         {{$content}} default content {{/content}} 
     </div>
+    {{$footer}} {{/footer}}
 </div>
 
 </body>

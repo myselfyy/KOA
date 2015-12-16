@@ -57,7 +57,7 @@ module.exports  = function (fileName,actionName,use){
             throw e;
         }
         this.rpsType = type;
-        this.rpsPage = Path.join(type,'page');
+        this.rpsPage = Path.join('page', type);
 
         var action = controller[actionName];
         if(!action) throw new Error('controller cannot find method '+ actionName);
