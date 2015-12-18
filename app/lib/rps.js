@@ -40,7 +40,7 @@ function ua(use){
 }
 
 //根据终端加载不同的controller
-module.exports  = function (fileName,actionName,use){
+module.exports  = function (fileName, actionName, use){
     var self = this;
     return function *(){
         //终端类型

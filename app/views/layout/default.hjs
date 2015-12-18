@@ -26,10 +26,13 @@
 </head>
 <body>
 <div id="page">
+    {{> header}}
+
     <div id="content">
         {{$content}} default content {{/content}} 
     </div>
-    {{$footer}} {{/footer}}
+
+    {{> footer}}
 </div>
 
 </body>

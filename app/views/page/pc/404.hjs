@@ -1,7 +1,9 @@
 {{<layout}}
     {{$content}}
         <p>&rarr; &rarr;Begin content</p>
+
         {{> welcome}}
+
         <p>&rarr; &rarr;End content</p>
         Hello {{name}}
         You'v just won {{value}} dollars!

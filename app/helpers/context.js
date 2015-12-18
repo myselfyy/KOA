@@ -27,6 +27,7 @@ module.exports = function(app){
     app.context.render = render.render;
     app.context.html = render.html;
     app.context.api = render.api;
+    app.context.redirectError = render.redirectError;
 
     //覆写错误输出
     if(process.env.NODE_ENV === 'production') {

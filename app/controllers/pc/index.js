@@ -4,9 +4,8 @@ exports.index = function *() {
     this.graver = true;
     yield this.html(view, {
         data: data,
-        partials: {
-            layout: 'layout/default',
-            footer: 'common/footer'
+        partial: {
+            welcome: 'common/welcome'
         }
     });
 };

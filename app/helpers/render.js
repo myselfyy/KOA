@@ -111,7 +111,10 @@ var render = {
         * attend default layout
         * */
         data.partial = utils.extendDeep({
-            layout: 'layout/default'
+            layout: 'layout/default',
+            header: 'common/header',
+            footer: 'common/footer',
+            analyse: 'common/analyse'
         }, data.partial);
 
         try {
@@ -168,7 +171,7 @@ var render = {
             this.redirect('/error.html');
         }
         this.type = 'text/html; charset=utf-8';
-        this.res.end(err.message || 'error page redirect.');
+        this.body = err || 'error page redirect.';
     }
 };
 

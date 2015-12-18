@@ -4,26 +4,25 @@ var router = new ( require('koa-router') )();
 
 var maxAge = 24 * 60 * 60 * 1000;
 
-function *notFound(next) {
+function * notFound(next) {
     if (this.status == 404) {
-        yield this.render('page/404', {
+        yield this.html('page/pc/404', {
             data: {
                 "name": 'Chris',
                 "value": 10000,
                 "taxed_value": 0.9,
                 "in_ca": true,
-                "title": 'xxxxxxx'
+                "title": '走错路咯'
             },
             partial: {
-                welcome: 'page/index/welcome',
-                layout: 'layout/default'
+                welcome: 'common/welcome'
             }
         });
     }
     yield next;
 }
 
-function *favicon(next){
+function * favicon(next){
     if ('/favicon.ico' != this.path) return yield next;
     if (!path) return;
 

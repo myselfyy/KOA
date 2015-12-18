@@ -1,9 +1,8 @@
-var render = require('../helpers/render'),
-    utils = require('../helpers/utils'),
+var rps = require('../lib/rps'),
     myUser = require('../models/user');
 
 //检查Id是否存在
-function *checkObjectId(objectId,next){
+function * checkObjectId(objectId,next){
     if(!objectId){
         this.redirectError('缺少Id');
     }else{
@@ -13,7 +12,7 @@ function *checkObjectId(objectId,next){
 }
 
 //检查是否已经登录
-function*checkLogin(next){
+function * checkLogin(next){
     var isLogin = yield myUser.checkLogin.bind(this)();
     this.isLogin = isLogin;
     if(!isLogin){
@@ -24,18 +23,10 @@ function*checkLogin(next){
 }
 
 module.exports = function (router){
-    router.get('/item', function *(next){
+    router.get('/art', function * (next){
         yield next;
     });
 
-    router.param('objectId', checkObjectId).get('/art/:objectId/item', checkLogin, function *(next) {
-        this.body = utils.extend(this.params, this.ua);
-        yield next;
-    });
-
-    router.param('objectId', checkObjectId).get('/art/:objectId/recommend', checkLogin, function *(next) {
-        this.body = '<h1>相关</h1>';
-        this.body += JSON.stringify(this.params);
-        yield next;
-    });
+    router.param('objectId', checkObjectId).get('/art/:objectId/item', checkLogin, rps('article', 'item', 'pc'));
+    router.param('objectId', checkObjectId).get('/art/:objectId/recommend', checkLogin, rps('article', 'recommend', 'pc'));
 };

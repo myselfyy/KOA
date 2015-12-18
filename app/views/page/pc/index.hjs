@@ -1,11 +1,6 @@
 {{<layout}}
-    {{$footer}}
-        {{<footer}}
-            {{$title}}My page footer{{/title}}
-        {{/footer}}
-    {{/footer}}
-
     {{$content}}
-        <h1>Hello world</h1>
+        {{> welcome}}
+        <h1>xxxxx</h1>
     {{/content}}
 {{/layout}}
