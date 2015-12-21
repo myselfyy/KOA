@@ -22,6 +22,7 @@ if(env === 'local' || env === 'development'){
  var session = require('koa-generic-session');
  var mongoStore = require('koa-generic-session-mongo');
  app.use(session({
+     key: app.info.global.cookie_key,
      store: new mongoStore(app.info.global.sessionMongo[dbType])
  }));
 
