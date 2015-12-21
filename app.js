@@ -19,10 +19,11 @@ if(env === 'local' || env === 'development'){
 }
 
 //session缓存
-// var session = require('koa-generic-session');
-// var mongo = require('koa-generic-session-mongo');
-// var mongoStore = mongo.connect(config.sessionMongo[dbType]);
-// app.use(session({store: mongoStore}));
+ var session = require('koa-generic-session');
+ var mongoStore = require('koa-generic-session-mongo');
+ app.use(session({
+     store: new mongoStore(config.sessionMongo[dbType])
+ }));
 
 //数据处理
 // var data = require('./app/helpers/data');
