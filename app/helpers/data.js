@@ -21,7 +21,7 @@ module.exports = {
     * @param {Int} ttl
     **/
     connect: function(options){
-        mongoose.connect(config.mongoDB[type]);
+        mongoose.connect(options);
 
         var db = mongoose.connection;
         db.on('error', function(err){

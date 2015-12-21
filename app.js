@@ -22,13 +22,13 @@ if(env === 'local' || env === 'development'){
  var session = require('koa-generic-session');
  var mongoStore = require('koa-generic-session-mongo');
  app.use(session({
-     store: new mongoStore(config.sessionMongo[dbType])
+     store: new mongoStore(app.info.global.sessionMongo[dbType])
  }));
 
 //数据处理
-// var data = require('./app/helpers/data');
-// data.connect(config.mongoDB[dbType])
-// app.db = data;
+ var data = require('./app/helpers/data');
+ data.connect(app.info.global.mongoDB[dbType])
+ app.db = data;
 
 //post body 解析
 var bodyParser = require('koa-bodyparser');

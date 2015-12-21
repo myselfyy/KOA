@@ -1,4 +1,6 @@
 var logger = require('../helpers/logger').getLogger('server'),
+    utils = require('../helpers/utils'),
+
     expect = require('args-expect'),
     path   = require('path'),
     fs     = require('fs'),
@@ -123,39 +125,40 @@ function getConfigPaths(nodeEnv, rootPath) {
 
     function makeAppConfigPath(fileName) {
         var filePath = path.join(rootPath, APP_CONF_FOLDER, fileName);
-        return filePath;
+        return filePath + '.conf';
     }
 
     return {
         appBaseConfig: makeAppConfigPath(APP_BASE_CONF_NAME),
 
+        appEnvConfig: makeAppConfigPath(nodeEnv),
+
         /* if NODE_ENV is "local" , add parent config is production.conf */
         appEnvParentConfig: NODE_ENV_INHERIT[nodeEnv] ? 
-            makeAppConfigPath( NODE_ENV_INHERIT[nodeEnv] ) : '',
-
-        appEnvConfig: makeAppConfigPath(nodeEnv)
+            makeAppConfigPath( NODE_ENV_INHERIT[nodeEnv] ) : ''
     };
 }
 
-var ConfigureFiles = false;
+var ConfigureFiles = {};
 /**
 *   Read config file content
 */
-function getConfigFiles() {
-    if (ConfigureFiles) return ConfigureFiles;
+function getConfigFiles(nodeEnv, rootPath) {
+    if ('base' in ConfigureFiles) return ConfigureFiles;
 
-    var configPaths = getConfigPaths();
+    var configPaths = getConfigPaths(nodeEnv, rootPath);
     for (var prop in configPaths) {
         if (configPaths.hasOwnProperty(prop)) {
-            fs.readFile(configPaths[prop], function (err, data) {
-                if (err) {
-                    logger.error('CONFIG file %s read failed', configPaths[prop]);
-                    throw err;
-                }
-                ConfigureFiles[prop] = data;
-            });
+            var data = fs.readFileSync(configPaths[prop], 'utf-8');
+
+            try {
+                ConfigureFiles[prop] = JSON.parse(data);
+            } catch (e) {
+                logger.error('config file :: %s read error.',prop);
+            }
         }
     }
+
     return ConfigureFiles;
 }
 
@@ -180,7 +183,7 @@ function Info() {
     };
 
     this.getConfig = function getConfig() {
-        return getConfigFiles();
+        return getConfigFiles(nodeEnv, rootPath);
     };
 
     this.getRootPath = function getRootPath() {
@@ -204,6 +207,17 @@ function Info() {
     this.isLocal = function isLocal() {
         return nodeEnv === NODE_ENV.LOCAL;
     };
+
+    this.global = (function () {
+        var ConfigureFiles = this.getConfig();
+        var global = {};
+
+        utils.extend(global, ConfigureFiles['appBaseConfig']['global']);
+        utils.extend(global, ConfigureFiles['appEnvConfig']['global']);
+        utils.extend(global, ConfigureFiles['appEnvParentConfig']['global']);
+
+        return global;
+    }).bind(this)();
 }
 
 /**
