@@ -42,6 +42,6 @@
     "start": "NODE_ENV=prod node --harmony bin/cluster.js"
   },
   "engines": {
-    "node": "0.12.1"
+    "node": "6.4.0"
   }
 }

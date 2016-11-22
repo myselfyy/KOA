@@ -5,7 +5,7 @@
 
 ### 目录
 - app
-    - apis: 服务借口
+    - apis: 服务接口
     - helpers: 工具型中间件
     - controllers: 业务逻辑逻辑操作单元
     - models: 应用层数据操作
